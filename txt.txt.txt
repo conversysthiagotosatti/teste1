@@ -1,0 +1,22 @@
+SELECT 
+    placeholder,
+    -- Traduzindo os nomes para versões brasileiras
+    CASE 
+        WHEN name = 'David' THEN 'Davi'
+        WHEN name = 'John' THEN 'João'
+        WHEN name = 'Tiffany' THEN 'Tifany'
+        WHEN name = 'Greg' THEN 'Gregório'
+        ELSE name 
+    END AS nome_brasileiro,
+    status,
+    flight,
+    -- Convertendo a moeda de USD para BRL (multiplicando por uma taxa estimada de 5.0)
+    (cost_usd * 5) AS custo_brl,
+    distance_km,
+    -- Mudando a região para Brasil onde fizer sentido ou mantendo a lógica
+    CASE 
+        WHEN region = 'NA' THEN 'BR'
+        ELSE region 
+    END AS regiao_atualizada
+FROM 
+    fakecustomerinfo.default.fake_customer_data;
