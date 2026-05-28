@@ -1,4 +1,16 @@
-CREATE TABLE fakecustomerinfo.default.fake_customer_data_brasil AS
+-- Passo 1: Criar a tabela com a estrutura brasileira vazia
+CREATE TABLE fakecustomerinfo.default.fake_customer_data_brasil (
+    placeholder VARCHAR,
+    nome_brasileiro VARCHAR,
+    status VARCHAR,
+    flight VARCHAR,
+    custo_brl BIGINT,
+    distance_km BIGINT,
+    regiao_atualizada VARCHAR
+);
+
+-- Passo 2: Inserir os dados transformados para o contexto brasileiro
+INSERT INTO fakecustomerinfo.default.fake_customer_data_brasil
 SELECT 
     placeholder,
     CASE 
@@ -7,14 +19,14 @@ SELECT
         WHEN name = 'Tiffany' THEN 'Tifany'
         WHEN name = 'Greg' THEN 'Gregório'
         ELSE name 
-    END AS nome_brasileiro,
+    END,
     status,
     flight,
-    (cost_usd * 5) AS custo_brl,
+    (cost_usd * 5),
     distance_km,
     CASE 
         WHEN region = 'NA' THEN 'BR'
         ELSE region 
-    END AS regiao_atualizada
+    END
 FROM 
     fakecustomerinfo.default.fake_customer_data;
